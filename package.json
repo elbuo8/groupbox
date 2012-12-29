@@ -1,15 +1,21 @@
 {
-  "name": "application-name",
-  "version": "0.0.1",
-  "private": true,
-  "scripts": {
-    "start": "node app"
-  },
+  "name": "groupbox",
+  "version": "0.0.0",
+  "description": "Photo Sync for Events",
+  "main": "server.coffee",
   "dependencies": {
-    "express": "3.0.5",
-    "ejs": "*",
-    "stylus": "*",
-    "redis": "~0.8.2",
-    "connect-redis": "~1.4.5"
-  }
+    "express": "~3.0.5",
+    "mongodb": "~1.2.7"
+  },
+  "devDependencies": {},
+  "scripts": {
+    "test": "coffee server.coffee"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git://github.com/elbuo8/groupbox.git"
+  },
+  "author": "elbuo8",
+  "license": "BSD",
+  "gitHead": "20c68680d6c376233150ac611b3fa049dccf20cb"
 }
