@@ -13,7 +13,7 @@ app.configure 'development', () ->
             @db = db
             console.log "connected"
             # Cron Jobs
-            setInterval (require './api/event-scanner'), 3000, @db # onGoingEvent Scanner (1 minute interval)
+            setInterval (require './api/event-scanner'), 6000, @db # onGoingEvent Scanner (1 minute interval)
         else
             console.log error
             
