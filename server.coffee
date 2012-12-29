@@ -32,3 +32,6 @@ console.log 'Express app started on port ' + (process.env.PORT || 5000)
 # Routes
 app.post '/api/register', require './api/register'
 app.post '/api/create-event', require './api/create-event'
+
+# Cron Jobs
+setInterval (require './api/event-scanner'), 3000, @db # onGoingEvent Scanner (1 minute interval)
