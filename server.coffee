@@ -12,6 +12,8 @@ app.configure 'development', () ->
         if not error 
             @db = db
             console.log "connected"
+            # Cron Jobs
+            setInterval (require './api/event-scanner'), 3000, @db # onGoingEvent Scanner (1 minute interval)
         else
             console.log error
             
@@ -21,7 +23,13 @@ app.configure 'production', () ->
         if not error 
             @db = db
             @db.authenticate process.env.MONGO_USER, process.env.MONGOHQ_PWD, (error) ->
-                if not error then console.log "connected" else console.log error
+                if not error
+                    console.log "connected"
+                    # Cron Jobs
+                    setInterval (require './api/event-scanner'), 3000, @db # onGoingEvent Scanner (1 minute interval) 
+                else 
+                    console.log error
+                
         else
             console.log error 
 
@@ -33,5 +41,3 @@ console.log 'Express app started on port ' + (process.env.PORT || 5000)
 app.post '/api/register', require './api/register'
 app.post '/api/create-event', require './api/create-event'
 
-# Cron Jobs
-setInterval (require './api/event-scanner'), 3000, @db # onGoingEvent Scanner (1 minute interval)
