@@ -29,9 +29,6 @@ app.configure 'production', () ->
 app.listen (process.env.PORT || 5000)
 console.log 'Express app started on port ' + (process.env.PORT || 5000)
 
-
-
-
 # Routes
 app.post '/api/register', require './api/register'
 app.post '/api/create-event', require './api/create-event'
