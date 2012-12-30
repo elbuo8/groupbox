@@ -5,7 +5,7 @@ oa = new OAuth "https://api.twitter.com/oauth/request_token",
     process.env.TWITTER_CONSUMER_KEY,
     process.env.TWITTER_CONSUMER_SECRET,
     "1.0",
-    "http://groupbox.herokuapp.com/api/auth-twitter-callback",
+    "http://groupbox.herokuapp.com/api/twitter-callback",
     "HMAC-SHA1"
 
 module.exports = (req, res) ->
