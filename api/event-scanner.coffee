@@ -10,15 +10,7 @@ Media handler.
 1. Must check that file is in the correct folder.
 2. Download photo, to localhost and submit it to social networks (Module)
 ###
-
-mediaHandler = (folder) ->
-    (entry) ->
-        console.log folder
-        console.log entry
-        ###
-        if entry[0].indexOf(folder) > -1
-            console.log "in folder"
-        ###
+ 
 
 module.exports = (db) ->
     db.collection 'onGoingEvents', (error, collection) ->
@@ -27,7 +19,15 @@ module.exports = (db) ->
                 if event 
                     dropbox = app.client {"oauth_token": event.key, "oauth_token_secret": event.secret}
                     dropbox.delta {"cursor": event.cursor}, (status, dbReply) ->
-                        # Navigate response
-                        async.forEach dbReply.entries, mediaHandler(event.folder), (error) ->
-                            console.log error 
                         collection.update {_id:event._id}, {$set:{cursor: dbReply.cursor}}, (error, result) ->
+                            
+                        # Navigate response
+                        if (dbReply.entries.length > 0)
+                            async.forEach dbReply.entries, (entry) =>
+                                # Verify that it's on the folder and that its an image
+                                if ((entry[0].indexOf event.folder > -1) and (entry[1].mime_type.indexOf('image') > -1))
+                                     console.log entry[0]
+                            , (error) ->
+                                if error
+                                    console.log error 
+                        
