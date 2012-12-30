@@ -13,6 +13,7 @@ module.exports = (req, res) ->
     oa.getOAuthAccessToken cacheAuth.token, cacheAuth.token_secret, req.query.oauth_verifier, (error, oauth_access_token, oauth_access_token_secret, results) ->     
         console.log req.session.uid #test uid was saved.
         console.log arguments
+        console.log @db
         @db.collection 'users', (error, collection) ->
             collection.findOne {uid:req.session.uid}, (error, user) ->
                 console.log arguments
