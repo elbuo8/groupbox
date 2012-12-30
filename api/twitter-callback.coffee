@@ -11,14 +11,10 @@ oa = new OAuth "https://api.twitter.com/oauth/request_token",
 module.exports = (req, res) ->
     cacheAuth = req.session
     oa.getOAuthAccessToken cacheAuth.token, cacheAuth.token_secret, req.query.oauth_verifier, (error, oauth_access_token, oauth_access_token_secret, results) ->     
-        console.log req.session.uid #test uid was saved.
-        console.log arguments
-        console.log @db
         @db.collection 'users', (error, collection) ->
-            collection.findOne {uid:req.session.uid}, (error, user) ->
+            collection.findOne {uid:cacheAuth.uid}, (error, user) ->
                 console.log arguments
                 if user
-                    collection.update {uid:req.session.uid}, {$set:{twitter:{access_token:oauth_access_token, access_secret:oauth_access_token_secret}}}, (error, result) ->
-                        console.log arguments
+                    collection.update {uid:cacheAuth.uid}, {$set:{twitter:{access_token:oauth_access_token, access_secret:oauth_access_token_secret}}}, (error, result) ->
                 res.redirect "groupbox://1/auth-ok?social=twitter&key="+oauth_access_token+"&secret="+oauth_access_token_secret            
 
