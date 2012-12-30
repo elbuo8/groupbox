@@ -8,7 +8,7 @@ mongo = (require 'mongodb').MongoClient
 app.configure () ->
     app.use express.bodyParser()
     app.use express.cookieParser()
-    app.use express.session()
+    app.use express.session secret: "vetateam"
 
 console.log process.env.NODE_ENV
 
