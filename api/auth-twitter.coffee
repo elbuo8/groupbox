@@ -12,4 +12,5 @@ module.exports = (req, res) ->
     oa.getOAuthRequestToken (error, oauth_token, oauth_token_secret, results) ->
         req.session.token = oauth_token
         req.session.token_secret = oauth_token_secret
+        req.session.uid = req.query.uid
         res.redirect 'https://twitter.com/oauth/authenticate?oauth_token=' + oauth_token

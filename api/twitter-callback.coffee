@@ -10,8 +10,9 @@ oa = new OAuth "https://api.twitter.com/oauth/request_token",
 
 module.exports = (req, res) ->
     res.send '200'
-    console.log req.session
     cacheAuth = req.session
     oa.getOAuthAccessToken cacheAuth.token, cacheAuth.token_secret, req.query.oauth_verifier, (error, oauth_access_token, oauth_access_token_secret, results) ->
-            console.log arguments
+            @db.collection 'users', (error, collection) ->
+                collection.update {uid:req.session.uid}, {$set:{twitter:{access_token:oauth_access_token, access_secret:oauth_access_token_secret}}}, (error, result) ->
+                    
             
