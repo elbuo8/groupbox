@@ -9,6 +9,7 @@ oa = new OAuth "https://api.twitter.com/oauth/request_token",
     "HMAC-SHA1"
 
 module.exports = (req, res) ->
+    console.log "working"
     if (req.session.oauth)
         cacheAuth = req.session
         oa.getOAuthAccessToken cacheAuth.token, cacheAuth.token_secret, req.query.oauth_verifier, (error, oauth_access_token, oauth_access_token_secret, results) ->
