@@ -1,10 +1,14 @@
 # Dependencies
+require('coffee-script')
 express = require 'express'
 app = express()
 mongo = (require 'mongodb').MongoClient
 
 # App configuration
-app.use express.bodyParser()
+app.configure () ->
+    app.use express.bodyParser()
+    app.use express.cookieParser()
+
 
 app.configure 'development', () ->
     #Mongo Local
@@ -22,7 +26,7 @@ app.configure 'production', () ->
     mongo.connect process.env.MONGOHQ_URL, (error, db) ->
         if not error 
             @db = db
-            @db.authenticate process.env.MONGO_USER, process.env.MONGOHQ_PWD, (error) ->
+            @db.authenticate process.env.MONGO_USER, process.env.MONGO_PWD, (error) ->
                 if not error
                     console.log "connected"
                     # Cron Jobs
