@@ -8,7 +8,6 @@ oa = new OAuth "https://api.twitter.com/oauth/request_token",
     "http://groupbox.herokuapp.com/api/auth-twitter-callback",
     "HMAC-SHA1"
 
-
 module.exports = (req, res) ->
     if (req.session.oauth)
         cacheAuth = req.session
