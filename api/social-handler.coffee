@@ -1,0 +1,2 @@
+
+twitter = require 'node-twitter'
