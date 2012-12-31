@@ -44,12 +44,16 @@ module.exports = (db) ->
                                     Bajar las fotos. Save them to /tmp
                                     Check el active event. 
                                     Push them to selected api
+                                    delete them
                                     ###
                                     if (photo.length > 0)
                                         if (event.twitter or event.facebook or event.gplus)
+
                                             dropbox.get photo[0], {root:'dropbox'}, (status, buffer, metadata) ->
-                                                hash = crypto.createHash('sha1').update(photo[0]).digest('hex')
-                                                fs.writeFile '/tmp/' + hash, buffer, (error) ->
+                                                #Pull local to /tmp
+                                                hash = ((crypto.createHash('sha1')).update(photo[0])).digest('hex')
+                                                ext = photo[0].substring(photo[0].lastIndexOf('.'))
+                                                fs.writeFile '/tmp/' + hash + ext, buffer, (error) ->
                                                     if error
                                                         callback(error)
                                                     else
@@ -58,11 +62,15 @@ module.exports = (db) ->
                                                             process.env.TWITTER_CONSUMER_SECRET,
                                                             event.twitter.access_token,
                                                             event.twitter.access_secret
+
+                                                            twitterClient.statusesUpdateWithMedia {'status': event.message, 'media[]': '/tmp/' + hash + ext}, (error, result) ->
+                                                        if (event.facebook)
+                                                            console.log event.facebook
                                                             
-                                                            twitterClient.statusesUpdateWithMedia {'status': event.message, 'media[]': '/tmp/' + hash, (error, result) ->
-                                                                console.log arguments
+                                                        if (event.gplus)
+                                                            console.log event.gplus
+                                                        
                                 , (error) =>
                                     console.log error
-                                    
 
                                                     
