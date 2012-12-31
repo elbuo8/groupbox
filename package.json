@@ -10,7 +10,8 @@
     "oauth": "~0.9.8",
     "coffee-script": "~1.4.0",
     "dbox": "~0.5.6",
-    "node-twitter": "~0.5.0"
+    "node-twitter": "~0.5.0",
+    "console-trace": "~0.2.1"
   },
   "engines": {
     "node": "0.8.x",

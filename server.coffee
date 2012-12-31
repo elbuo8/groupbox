@@ -3,6 +3,7 @@ require('coffee-script')
 express = require 'express'
 app = express()
 mongo = (require 'mongodb').MongoClient
+(require 'console-trace') {always:true}
 
 # App configuration
 app.configure () ->
@@ -19,7 +20,7 @@ app.configure 'development', () ->
             @db = db
             console.log "connected"
             # Cron Jobs
-            setInterval (require './api/event-scanner'), 30000, @db # onGoingEvent Scanner (1 minute interval)
+            setInterval (require './api/event-scanner'), 6000, @db # onGoingEvent Scanner (1 minute interval)
         else
             console.log error
             
@@ -32,7 +33,7 @@ app.configure 'production', () ->
                 if not error
                     console.log "connected"
                     # Cron Jobs
-                    setInterval (require './api/event-scanner'), 30000, @db # onGoingEvent Scanner (1 minute interval) 
+                    setInterval (require './api/event-scanner'), 6000, @db # onGoingEvent Scanner (1 minute interval) 
                 else 
                     console.log error
                 

@@ -29,14 +29,14 @@ module.exports = (req, res) ->
     #check if user is in db
     @db.collection 'users', (error, collection) ->
         collection.findOne {uid:req.body.uid}, (error, user) ->
-            console.log user
             if not user #not registered
                 res.send '1'
             else #add event to db
                 #Event needs specific keys for Auth
                 req.body.key = user.key
                 req.body.secret = user.secret
-                console.log req.body
+                if (req.body.twitter is true)
+                    req.body.twitter = user.twitter
                 @db.collection 'events', (error, collection) ->
                     collection.insert req.body, (error, result) ->
                         if not error
