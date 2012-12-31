@@ -45,7 +45,9 @@ module.exports = (db) ->
                                     ###
                                     if (photo.length > 0)
                                         if (event.twitter or event.facebook or event.gplus)
-                                            dropbox.get photo[0], (status, image, metadata) ->
+                                            options =
+                                                root: "dropbox"
+                                            dropbox.get photo[0], options, (status, image, metadata) ->
                                                 console.log status
                                                 console.log image
                                                 console.log "step1"
