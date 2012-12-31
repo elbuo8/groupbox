@@ -14,8 +14,7 @@ Media handler.
  
 
 module.exports = (db) ->
-    @db = db
-    @db.collection 'onGoingEvents', (error, collection) ->
+    db.collection 'onGoingEvents', (error, collection) ->
         collection.find {}, (error, cursor) ->
             cursor.each (error, event) ->
                 if event 
@@ -37,5 +36,24 @@ module.exports = (db) ->
                                 else 
                                     callback(false)
                             , (photos) =>
-                                console.log arguments
-                                console.log event
+                                async.forEach photos, (photo) =>
+                                    ###
+                                    If none of the social medias are active, pichear.
+                                    Bajar las fotos. Save them to /tmp
+                                    Check el active event. 
+                                    Push them to selected api
+                                    ###
+                                    if (photo.length > 0)
+                                        if (event.twitter or event.facebook or event.gplus)
+                                            dropbox.get photo[0], (status, image, metadata) ->
+                                                console.log status
+                                                console.log image
+                                                console.log "step1"
+                                                if (event.twitter)
+                                                    twitterClient = new twitter.RestClient process.env.TWITTER_CONSUMER_KEY,
+                                                    process.env.TWITTER_CONSUMER_SECRET,
+                                                    event.twitter.access_token,
+                                                    event.twitter.access_secret
+                                        
+                                                    twitterClient.statusesUpdateWithMedia {'status': event.message, 'media[]': photo}, (error, result) ->
+                                                        console.log result
