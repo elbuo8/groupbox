@@ -45,7 +45,8 @@ module.exports = (db) ->
                                     ###
                                     if (photo.length > 0)
                                         if (event.twitter or event.facebook or event.gplus)
-                                            dropbox.shares photo[0], (status, link) ->
+
+                                            dropbox.shares photo[0], {root:'dropbox'}, (status, link) ->
                                                 console.log status
                                                 console.log link
                                                 console.log "step1"
@@ -61,3 +62,5 @@ module.exports = (db) ->
                                                         console.log result
                                 , (error) =>
                                     console.log error
+
+                                                    
