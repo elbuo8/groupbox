@@ -45,15 +45,19 @@ module.exports = (db) ->
                                     ###
                                     if (photo.length > 0)
                                         if (event.twitter or event.facebook or event.gplus)
-                                            dropbox.get photo[0], (status, image, metadata) ->
+                                            dropbox.shares photo[0], (status, link) ->
                                                 console.log status
-                                                console.log image
+                                                console.log link
                                                 console.log "step1"
                                                 if (event.twitter)
+                                                    console.log process.env.TWITTER_CONSUMER_KEY + " " + process.env.TWITTER_CONSUMER_SECRET,
+                                                    console.log event.twitter.access_token + " " + event.twitter.access_secret
                                                     twitterClient = new twitter.RestClient process.env.TWITTER_CONSUMER_KEY,
                                                     process.env.TWITTER_CONSUMER_SECRET,
                                                     event.twitter.access_token,
                                                     event.twitter.access_secret
                                         
-                                                    twitterClient.statusesUpdateWithMedia {'status': event.message, 'media[]': photo}, (error, result) ->
+                                                    twitterClient.statusesUpdateWithMedia {'status': event.message, 'media[]': link}, (error, result) ->
                                                         console.log result
+                                , (error) =>
+                                    console.log error
