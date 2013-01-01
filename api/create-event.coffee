@@ -37,10 +37,12 @@ module.exports = (req, res) ->
                 req.body.secret = user.secret
                 if (req.body.twitter is true)
                     req.body.twitter = user.twitter
+                if (req.body.facebook is true)
+                    req.body.facebook = user.facebook
                 @db.collection 'events', (error, collection) ->
                     collection.insert req.body, (error, result) ->
                         if not error
-                            res.send '0'
+                            res.send '{\'eventID\':' + result[0]._id + '}'
                             #callback, delay in ms, parameters
                             #creates de cron job based on a timer
                             setTimeout (require './event-pool-creation'), (req.body.start*1000) - new Date().getTime(), result[0], @db
