@@ -6,4 +6,5 @@ auth = fb.getOauthUrl {
 }
 
 module.exports = (req, res) ->
+    req.session.uid = req.query.uid
     res.redirect auth
