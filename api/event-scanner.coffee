@@ -16,6 +16,7 @@ Media handler.
  
 
 module.exports = (db) ->
+    console.log 'scanning'
     db.collection 'onGoingEvents', (error, collection) ->
         collection.find {}, (error, cursor) ->
             cursor.each (error, event) ->

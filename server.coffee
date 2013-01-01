@@ -33,7 +33,7 @@ app.configure 'production', () ->
                 if not error
                     console.log "connected"
                     # Cron Jobs
-                    setInterval (require './api/event-scanner'), 6000, @db # onGoingEvent Scanner (1 minute interval) 
+                    setInterval (require './api/event-scanner'), 30000, @db # onGoingEvent Scanner (1 minute interval) 
                 else 
                     console.log error
                 
