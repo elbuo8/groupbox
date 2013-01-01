@@ -4,6 +4,8 @@ app = dbox.app {"app_key": process.env.DBOX_APP_KEY, "app_secret": process.env.D
 twitter = require 'node-twitter'
 fs = require 'fs'
 crypto = require 'crypto'
+fb = require 'fbgraph'
+
 ###
 Scan the onGoingEvents Pool and check for changes in the dropbox folder
 ###
@@ -66,7 +68,11 @@ module.exports = (db) ->
 
                                                             twitterClient.statusesUpdateWithMedia {'status': event.message, 'media[]': '/tmp/' + hash + ext}, (error, result) ->
                                                         if (event.facebook)
-                                                            console.log event.facebook
+                                                            fb.setAccessToken event.facebook.access_token
+                                                            dropbox.share photo[0], {root:'dropbox'}, (status, link) ->
+                                                                statusUpdate = { 'message': event.message, 'photo': link.url}
+                                                                fb.post 'me/feed', statusUpdate, (error, response) ->
+                                                                    console.log arguments
                                                             
                                                         if (event.gplus)
                                                             console.log event.gplus
