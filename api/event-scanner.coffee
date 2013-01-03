@@ -26,7 +26,6 @@ module.exports = (db) ->
                     dropbox = app.client {'oauth_token': event.key, 'oauth_token_secret': event.secret}
                     dropbox.delta {'cursor': event.cursor}, (status, dbReply) ->
                         collection.update {_id:event._id}, {$set:{cursor: dbReply.cursor}}, (error, result) ->
-                  
                         # Navigate response
                         if (dbReply.entries.length > 0)
                             async.filter dbReply.entries, (entry, callback) =>
@@ -51,7 +50,7 @@ module.exports = (db) ->
                                     ###
                                     if (photo.length > 0)
                                         if (event.twitter or event.facebook or event.gplus)
-
+                                            console.log photo[1]
                                             dropbox.get photo[0], {root:'dropbox'}, (status, buffer, metadata) ->
                                                 #Pull local to /tmp
                                                 hash = ((crypto.createHash('sha1')).update(photo[0])).digest('hex')
