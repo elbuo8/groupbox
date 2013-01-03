@@ -51,7 +51,7 @@ module.exports = (db) ->
                                     if (photo.length > 0)
                                         if (event.twitter or event.facebook or event.gplus)
                                             console.log photo[1]
-                                            dropbox.get photo[0], {root:'dropbox'}, (status, buffer, metadata) ->
+                                            dropbox.get photo[0], {root:'dropbox'}, (status, buffer, metadata) =>
                                                 #Pull local to /tmp
                                                 hash = ((crypto.createHash('sha1')).update(photo[0])).digest('hex')
                                                 ext = photo[0].substring(photo[0].lastIndexOf('.'))
@@ -68,7 +68,7 @@ module.exports = (db) ->
                                                             twitterClient.statusesUpdateWithMedia {'status': event.message, 'media[]': '/tmp/' + hash + ext}, (error, result) ->
                                                         if (event.facebook)
                                                             fb.setAccessToken event.facebook.access_token
-                                                            dropbox.share photo[0], {root:'dropbox'}, (status, link) ->
+                                                            dropbox.shares photo[0], {root:'dropbox'}, (status, link) ->
                                                                 statusUpdate = { 'message': event.message, 'photo': link.url}
                                                                 fb.post 'me/feed', statusUpdate, (error, response) ->
                                                                     console.log arguments
