@@ -7,4 +7,4 @@ auth = fb.getOauthUrl {
 
 module.exports = (req, res) ->
     req.session.uid = req.query.uid
-    res.redirect auth
+    res.redirect auth + '&scope=publish_stream'
