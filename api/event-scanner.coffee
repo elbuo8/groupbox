@@ -49,8 +49,8 @@ module.exports = (db) ->
                                     delete them
                                     ###
                                     if (photo.length > 0)
-                                        if (event.twitter or event.facebook or event.gplus)
-                                            console.log photo[1]
+                                        #verify con daniel
+                                        if ((event.twitter or event.facebook or event.gplus) and new Date(photo[1].modified).getTime() > event.start)
                                             dropbox.get photo[0], {root:'dropbox'}, (status, buffer, metadata) =>
                                                 #Pull local to /tmp
                                                 hash = ((crypto.createHash('sha1')).update(photo[0])).digest('hex')
@@ -69,6 +69,7 @@ module.exports = (db) ->
                                                         if (event.facebook)
                                                             fb.setAccessToken event.facebook.access_token
                                                             dropbox.shares photo[0], {root:'dropbox'}, (status, link) ->
+                                                                console.log arguments
                                                                 statusUpdate = { 'message': event.message, 'photo': link.url}
                                                                 fb.post 'me/feed', statusUpdate, (error, response) ->
                                                                     console.log arguments
