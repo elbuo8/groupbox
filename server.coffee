@@ -45,6 +45,8 @@ app.listen (process.env.PORT || 5000)
 console.log 'Express app started on port ' + (process.env.PORT || 5000)
 
 # Routes
+app.get '/', (req, res) ->
+    res.send '0'
 app.post '/api/register', require './api/register'
 app.post '/api/create-event', require './api/create-event'
 app.get '/api/auth-twitter', require './api/auth-twitter'
