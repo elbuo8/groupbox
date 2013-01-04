@@ -69,8 +69,8 @@ module.exports = (db) ->
                                                         if (event.facebook)
                                                             fb.setAccessToken event.facebook.access_token
                                                             dropbox.media photo[0], {root:'dropbox'}, (status, link) ->
-                                                                console.log link.url
-                                                                statusUpdate = { 'message': event.message, 'photo': link.url}
+                                                                
+                                                                statusUpdate = { 'message': event.message, 'picture': link.url}
                                                                 fb.post 'me/feed', statusUpdate, (error, response) ->
                                                                     console.log arguments
                                                             
