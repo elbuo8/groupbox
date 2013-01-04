@@ -9,4 +9,4 @@ module.exports = (db) ->
                     setTimeout (require './event-pool-remove'), 0, event, @db
 
     db.collection 'onGoingEvents', (error, collection) ->
-        collection.remove {end{$gte: (new Date().getTime())/1000}}, (error, result) ->
+        collection.remove {end:{$gte: (new Date().getTime())/1000}}, (error, result) ->
