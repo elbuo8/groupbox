@@ -50,7 +50,8 @@ module.exports = (db) ->
                                     ###
                                     if (photo.length > 0)
                                         #verify con daniel
-                                        if ((event.twitter or event.facebook or event.gplus) and new Date(photo[1].modified).getTime() > event.start)
+                                        console.log (new Date(photo[1].modified)).getTime() > event.start
+                                        if ((event.twitter or event.facebook or event.gplus) and (new Date(photo[1].modified)).getTime() > event.start)
                                             dropbox.get photo[0], {root:'dropbox'}, (status, buffer, metadata) =>
                                                 #Pull local to /tmp
                                                 hash = ((crypto.createHash('sha1')).update(photo[0])).digest('hex')
@@ -69,7 +70,6 @@ module.exports = (db) ->
                                                         if (event.facebook)
                                                             fb.setAccessToken event.facebook.access_token
                                                             dropbox.media photo[0], {root:'dropbox'}, (status, link) ->
-                                                                
                                                                 statusUpdate = { 'message': event.message, 'picture': link.url}
                                                                 fb.post 'me/feed', statusUpdate, (error, response) ->
                                                                     console.log arguments
