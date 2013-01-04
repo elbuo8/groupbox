@@ -56,4 +56,4 @@ app.get '/api/facebook-callback', require './api/facebook-callback'
 app.get '/api/cancel-event', require './api/cancel-event'
 
 # Init cron
-setInterval (require './api/init-cron'). 300000, @db
+setInterval (require './api/init-cron'), 300000, @db
