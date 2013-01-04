@@ -68,8 +68,8 @@ module.exports = (db) ->
                                                             twitterClient.statusesUpdateWithMedia {'status': event.message, 'media[]': '/tmp/' + hash + ext}, (error, result) ->
                                                         if (event.facebook)
                                                             fb.setAccessToken event.facebook.access_token
-                                                            dropbox.shares photo[0], {root:'dropbox'}, (status, link) ->
-                                                                console.log arguments
+                                                            dropbox.media photo[0], {root:'dropbox'}, (status, link) ->
+                                                                console.log link.url
                                                                 statusUpdate = { 'message': event.message, 'photo': link.url}
                                                                 fb.post 'me/feed', statusUpdate, (error, response) ->
                                                                     console.log arguments
