@@ -20,7 +20,7 @@ app.configure 'development', () ->
             @db = db
             console.log "connected"
             # Cron Jobs
-            setInterval (require './api/event-scanner'), 6000, @db # onGoingEvent Scanner (1 minute interval)
+            setInterval (require './api/event-scanner'), 60000, @db # onGoingEvent Scanner (1 minute interval)
         else
             console.log error
             
@@ -33,7 +33,7 @@ app.configure 'production', () ->
                 if not error
                     console.log "connected"
                     # Cron Jobs
-                    setInterval (require './api/event-scanner'), 30000, @db # onGoingEvent Scanner (1 minute interval) 
+                    setInterval (require './api/event-scanner'), 60000, @db # onGoingEvent Scanner (1 minute interval) 
                 else 
                     console.log error
                 
@@ -54,3 +54,6 @@ app.get '/api/twitter-callback', require './api/twitter-callback'
 app.get '/api/auth-facebook', require './api/auth-facebook'
 app.get '/api/facebook-callback', require './api/facebook-callback'
 app.get '/api/cancel-event', require './api/cancel-event'
+
+# Init cron
+setInterval (require './api/init-cron'). 300000, @db
