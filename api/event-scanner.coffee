@@ -78,11 +78,8 @@ module.exports = (db) ->
                                                                 path: '/me/photos?access_token' + event.facebook.access_token,
                                                                 headers: form.getHeaders()
                                                             }
-                                                            
                                                             form.pipe https.request statusUpdate, (res) ->
                                                                 console.log res
-                                                                
-                                                            
                                                             
                                                         if (event.gplus)
                                                             console.log event.gplus
