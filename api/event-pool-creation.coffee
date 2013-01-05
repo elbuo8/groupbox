@@ -4,11 +4,11 @@ Cron job to add the event to the event pool
 
 
 module.exports = (event, db) ->
-    #flag el event como upcommint
+    #flag el event como upcomming
     #add it to upcomming pool
     db.collection 'events', (error, collection) ->
         collection.findOne {_id:event._id}, (error, currentEvent) ->
-            if (!currentEvent.cancelled)
+            if (currentEvent and currentEvent.cancelled?)
                 db.collection 'onGoingEvents', (error, collection) ->
                     collection.insert event, (error, result) ->
                         if not error
