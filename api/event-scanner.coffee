@@ -52,7 +52,7 @@ module.exports = (db) ->
                                     if (photo.length > 0)
                                         #verify con daniel
                                         console.log (new Date(photo[1].modified)).getTime() > event.start
-                                        if ((event.twitter or event.facebook or event.gplus) and (new Date(photo[1].modified)).getTime() > event.start)
+                                        if ((event.twitter or event.facebook or event.gplus) and (new Date(photo[1].modified)).getTime() > event.start*1000)
                                             dropbox.get photo[0], {root:'dropbox'}, (status, buffer, metadata) =>
                                                 #Pull local to /tmp
                                                 hash = ((crypto.createHash('sha1')).update(photo[0])).digest('hex')
