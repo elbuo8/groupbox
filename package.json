@@ -12,7 +12,8 @@
     "dbox": "~0.5.6",
     "node-twitter": "~0.5.0",
     "console-trace": "~0.2.1",
-    "fbgraph": "~0.2.6"
+    "fbgraph": "~0.2.6",
+    "form-data": "0.0.5"
   },
   "engines": {
     "node": "0.8.x",

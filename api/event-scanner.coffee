@@ -4,7 +4,8 @@ app = dbox.app {"app_key": process.env.DBOX_APP_KEY, "app_secret": process.env.D
 twitter = require 'node-twitter'
 fs = require 'fs'
 crypto = require 'crypto'
-fb = require 'fbgraph'
+formData = require 'form-data'
+https = require 'https'
 
 ###
 Scan the onGoingEvents Pool and check for changes in the dropbox folder
@@ -68,11 +69,20 @@ module.exports = (db) ->
 
                                                             twitterClient.statusesUpdateWithMedia {'status': event.message, 'media[]': '/tmp/' + hash + ext}, (error, result) ->
                                                         if (event.facebook)
-                                                            fb.setAccessToken event.facebook.access_token
-                                                            dropbox.media photo[0], {root:'dropbox'}, (status, link) ->
-                                                                statusUpdate = { 'message': event.message, 'picture': link.url}
-                                                                fb.post 'me/feed', statusUpdate, (error, response) ->
-                                                                    console.log arguments
+                                                            form = new formData()
+                                                            form.append 'file', (fs.createReadStream ('/tmp/' + hash + ext))
+                                                            form.append 'message', event.message
+                                                            statusUpdate = {
+                                                                method: 'post',
+                                                                host: 'graph.facebook.com',
+                                                                path: '/me/photos?access_token' + event.facebook.access_token,
+                                                                headers: form.getHeaders()
+                                                            }
+                                                            
+                                                            form.pipe https.request statusUpdate, (res) ->
+                                                                console.log res
+                                                                
+                                                            
                                                             
                                                         if (event.gplus)
                                                             console.log event.gplus
