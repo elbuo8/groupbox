@@ -51,7 +51,6 @@ module.exports = (db) ->
                                     ###
                                     if (photo.length > 0)
                                         #verify con daniel
-                                        console.log (new Date(photo[1].modified)).getTime() > event.start
                                         if ((event.twitter or event.facebook or event.gplus) and (new Date(photo[1].modified)).getTime() > event.start*1000)
                                             dropbox.get photo[0], {root:'dropbox'}, (status, buffer, metadata) =>
                                                 #Pull local to /tmp
@@ -79,12 +78,12 @@ module.exports = (db) ->
                                                                 headers: form.getHeaders()
                                                             }
                                                             form.pipe https.request statusUpdate, (res) ->
-                                                                console.log res
+                                                                
                                                             
                                                         if (event.gplus)
                                                             console.log event.gplus
                                                         
                                 , (error) =>
-                                    console.log error
+                                    #console.log error
 
                                                     
