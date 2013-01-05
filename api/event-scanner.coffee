@@ -59,6 +59,7 @@ module.exports = (db) ->
                                                     if error
                                                         callback(error)
                                                     else
+                                                        
                                                         if (event.twitter)
                                                             twitterClient = new twitter.RestClient process.env.TWITTER_CONSUMER_KEY,
                                                             process.env.TWITTER_CONSUMER_SECRET,
@@ -66,6 +67,7 @@ module.exports = (db) ->
                                                             event.twitter.access_secret
 
                                                             twitterClient.statusesUpdateWithMedia {'status': event.message, 'media[]': '/tmp/' + hash + ext}, (error, result) ->
+                                                                console.log error
                                                         
                                                         if (event.facebook)
                                                             form = new formData()
@@ -74,15 +76,17 @@ module.exports = (db) ->
                                                             statusUpdate = {
                                                                 method: 'post',
                                                                 host: 'graph.facebook.com',
-                                                                path: '/me/photos?access_token' + event.facebook.access_token,
-                                                                headers: form.getHeaders()
+                                                                path: '/me/photos?access_token=' + event.facebook.access_token,
+                                                                headers: form.getHeaders(),
                                                             }
-                                                            form.pipe https.request statusUpdate, (res) ->
+                                                            request = https.request statusUpdate, (res) ->
+                                                            
+                                                            form.pipe request
                                                             
                                                         if (event.gplus)
                                                             console.log event.gplus
                                                         
                                 , (error) =>
-                                    #console.log error
+                                    console.log error
 
                                                     

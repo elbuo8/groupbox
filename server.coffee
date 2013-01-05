@@ -20,7 +20,7 @@ app.configure 'development', () ->
             @db = db
             console.log "connected"
             # Cron Jobs
-            setInterval (require './api/event-scanner'), 60000, @db # onGoingEvent Scanner (1 minute interval)
+            setInterval (require './api/event-scanner'), 6000, @db # onGoingEvent Scanner (1 minute interval)
             setInterval (require './api/init-cron'), 300000, @db
         else
             console.log error
@@ -34,7 +34,7 @@ app.configure 'production', () ->
                 if not error
                     console.log "connected"
                     # Cron Jobs
-                    setInterval (require './api/event-scanner'), 60000, @db # onGoingEvent Scanner (1 minute interval)
+                    setInterval (require './api/event-scanner'), 6000, @db # onGoingEvent Scanner (1 minute interval)
                     setInterval (require './api/init-cron'), 300000, @db 
                 else 
                     console.log error
