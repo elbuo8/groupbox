@@ -50,7 +50,6 @@ module.exports = (db) ->
                                     delete them
                                     ###
                                     if (photo.length > 0)
-                                        #verify con daniel
                                         if ((event.twitter or event.facebook or event.gplus) and (new Date(photo[1].modified)).getTime() > event.start*1000)
                                             dropbox.get photo[0], {root:'dropbox'}, (status, buffer, metadata) =>
                                                 #Pull local to /tmp
@@ -67,6 +66,7 @@ module.exports = (db) ->
                                                             event.twitter.access_secret
 
                                                             twitterClient.statusesUpdateWithMedia {'status': event.message, 'media[]': '/tmp/' + hash + ext}, (error, result) ->
+                                                        
                                                         if (event.facebook)
                                                             form = new formData()
                                                             form.append 'file', (fs.createReadStream ('/tmp/' + hash + ext))
@@ -77,8 +77,8 @@ module.exports = (db) ->
                                                                 path: '/me/photos?access_token' + event.facebook.access_token,
                                                                 headers: form.getHeaders()
                                                             }
-                                                            form.pipe https.request statusUpdate, (res) ->
-                                                                
+                                                            form.pipe https.request statusUpdate, (res) =>
+                                                                console.log res
                                                             
                                                         if (event.gplus)
                                                             console.log event.gplus
