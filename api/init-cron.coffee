@@ -1,5 +1,4 @@
-module.exports = (db) =>
-    console.log 'init-cron'
+module.exports = (db) ->
     db.collection 'events', (error, collection) ->
         collection.find {start:{$lte: (new Date().getTime())/1000}, queued:{$nin: [true]}}, (error, cursor) ->
             try
@@ -13,4 +12,4 @@ module.exports = (db) =>
 
     db.collection 'onGoingEvents', (error, collection) ->
         collection.remove {end:{$lte: (new Date().getTime())/1000}}, (error, result) ->
-            console.log 'removed' + result
+            console.log 'removed' + ' ' + result
