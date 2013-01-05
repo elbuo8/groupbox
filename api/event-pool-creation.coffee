@@ -7,7 +7,9 @@ module.exports = (event, db) ->
     #add it to upcomming pool
     db.collection 'events', (error, collection) ->
         collection.findOne {_id: event._id}, (error, currentEvent) ->
-            if currentEvent.cancelled?
+            console.log 'adding event'
+            console.log !(currentEvent.cancelled?)
+            if !(currentEvent.cancelled?)
                 db.collection 'onGoingEvents', (error, collection) ->
                     collection.insert event, (error, result) ->
                         if not error
