@@ -1,7 +1,7 @@
 module.exports = (db) ->
     db.collection 'events', (error, collection) ->
-        collection.find {start:{$gte: new Date().getTime()/1000}}, (error, cursor) ->
-            if (cursor)
+        collection.find {start:{$gte: (new Date().getTime())/1000}}, (error, cursor) ->
+            if (cursor._events)
                 cursor.each(error, event) ->
                     if (event)
                         if (event.queued is undefined or event.queued is null)
