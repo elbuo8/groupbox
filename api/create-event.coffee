@@ -46,12 +46,13 @@ module.exports = (req, res) ->
                         if not error
                             res.send '{\'eventID\':' + result[0]._id + '}'
                             #Get initial cursor
-	                    dropbox = app.client {'oauth_token': result.key, 'oauth_token_secret': result.secret}
-	                    delta = (status, reply) ->
+	                        dropbox = app.client {'oauth_token': result.key, 'oauth_token_secret': result.secret}
+	                        delta = (status, reply) ->
                                 if reply.has_more
                                     dropbox.delta {'cursor': reply.cursor}, delta
                                 else
-                                    collection.update {_id:result_id}, {$set:{cursor: reply.cursor}}, (error, result) ->
+                                    collection.update {_id:result._id}, {$set:{cursor: reply.cursor}}, (error, result) ->
+                                        
                             dropbox.delta delta
                             #callback, delay in ms, parameters
                             #creates de cron job based on a timer
