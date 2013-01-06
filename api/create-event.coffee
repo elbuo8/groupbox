@@ -1,3 +1,4 @@
+dbox = require 'dbox'
 app = dbox.app {'app_key': process.env.DBOX_APP_KEY, 'app_secret': process.env.DBOX_SECRET_KEY}
 
 ###
