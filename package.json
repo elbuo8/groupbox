@@ -14,7 +14,8 @@
     "console-trace": "~0.2.1",
     "fbgraph": "~0.2.6",
     "form-data": "0.0.5",
-    "sendgrid": "~0.2.5"
+    "sendgrid": "~0.2.5",
+    "request": "~2.12.0"
   },
   "engines": {
     "node": "0.8.x",
